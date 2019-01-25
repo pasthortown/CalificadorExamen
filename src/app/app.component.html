@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row mt-2 mb-2">
+    <div class="col-12 text-center">
+      <button
+        *ngIf="!observando"
+        type="button"
+        class="btn btn-secondary"
+        (click)="observar()"
+      >
+        Activar
+      </button>
+      <button
+        *ngIf="observando"
+        type="button"
+        class="btn btn-success"
+        (click)="dejarDeObservar()"
+      >
+        Desactivar
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre de la Base de Datos</th>
+            <th>BDD Creada</th>
+            <th>Tabla Usuarios Creada</th>
+            <th>Nombre Primer Usuario</th>
+            <th>Estado Primer Usuario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bdd of listaBdds">
+            <td>{{ bdd.nombre }}</td>
+            <td>
+              <span *ngIf="bdd.estado" class="badge badge-success">True</span>
+              <span *ngIf="!bdd.estado" class="badge badge-danger">False</span>
+            </td>
+            <td>
+              <span *ngIf="bdd.tablaUsuario" class="badge badge-success"
+                >True</span
+              >
+              <span *ngIf="!bdd.tablaUsuario" class="badge badge-danger"
+                >False</span
+              >
+            </td>
+            <td>
+              <span>{{ bdd.nombrePrimerUsuario }}</span>
+            </td>
+            <td>
+              <span *ngIf="bdd.estadoPrimerUsuario !== ''">
+                <span
+                  *ngIf="bdd.estadoPrimerUsuario === 'Activo'"
+                  class="badge badge-success"
+                  >True</span
+                >
+                <span
+                  *ngIf="bdd.estadoPrimerUsuario === 'Inactivo'"
+                  class="badge badge-danger"
+                  >False</span
+                >
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
