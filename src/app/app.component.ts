@@ -41,8 +41,14 @@ export class AppComponent implements OnInit {
     }
   }
   buscarBDD() {
+    this.listaBdds.forEach(element => {
+      element.estado = false;
+      element.tablaUsuario = false;
+      element.nombrePrimerUsuario = "";
+      element.estadoPrimerUsuario = "";
+    });
     this.http
-      .get(environment.api + "bases")
+      .get(environment.api + "bases?foo=" + Math.random().toString())
       .toPromise()
       .then(r => {
         const respuesta = r.json();
@@ -51,7 +57,13 @@ export class AppComponent implements OnInit {
             if (bdd.nombre === element.Database) {
               bdd.estado = true;
               this.http
-                .get(environment.api + "tablas?dataBase=" + bdd.nombre)
+                .get(
+                  environment.api +
+                    "tablas?foo=" +
+                    Math.random().toString() +
+                    "&dataBase=" +
+                    bdd.nombre
+                )
                 .toPromise()
                 .then(r2 => {
                   const respuesta2 = r2.json();
@@ -60,7 +72,11 @@ export class AppComponent implements OnInit {
                       bdd.tablaUsuario = true;
                       this.http
                         .get(
-                          environment.api + "usuarios?dataBase=" + bdd.nombre
+                          environment.api +
+                            "usuarios?foo=" +
+                            Math.random().toString() +
+                            "&dataBase=" +
+                            bdd.nombre
                         )
                         .toPromise()
                         .then(r3 => {
